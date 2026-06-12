@@ -319,7 +319,9 @@ nav {
   gap: 1.5rem;
 }
 .services-header-sub {
+  font-family: var(--serif);
   font-size: 1.125rem;
+  font-style: italic;
   color: rgba(255,255,255,0.4);
   max-width: 52ch;
   line-height: 1.7;
