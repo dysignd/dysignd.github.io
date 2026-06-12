@@ -308,7 +308,7 @@ nav {
    SERVICES
 ═══════════════════════════════════ */
 #services { background: var(--dark); color: var(--white); }
-#services .section-title { color: var(--white); }
+#services .section-title { color: var(--white); font-size: clamp(1.75rem, 3vw, 3rem); }
 #services .section-tag { color: rgba(255,255,255,0.3); }
 #services .section-tag::before { background: rgba(255,255,255,0.15); }
 
