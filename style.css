@@ -500,46 +500,47 @@ nav {
 #work .section-tag { color: rgba(255,255,255,0.3); }
 #work .section-tag::before { background: rgba(255,255,255,0.12); }
 
-.work-header { margin-bottom: 4rem; }
-.work-header p { margin-top: 1rem; color: rgba(255,255,255,0.35); font-size: 0.9375rem; }
+.work-framing { margin-bottom: 5rem; }
 
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.work-card {
-  border: 1px solid rgba(255,255,255,0.07);
-  padding: 2.5rem;
-}
-.work-sector {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.28);
-  margin-bottom: 1.5rem;
-  display: block;
-}
-.work-title {
+.work-sub {
   font-family: var(--serif);
-  font-size: 1.375rem;
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-.work-desc {
-  font-size: 0.875rem;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.72;
-}
-.work-service-label {
-  display: block;
-  margin-top: 2rem;
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.18);
   font-style: italic;
+  font-size: 1.125rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 1.25rem;
+}
+
+/* Ticker */
+.ticker-wrapper {
+  overflow: hidden;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 35s linear infinite;
+}
+
+.ticker-inner {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  padding-right: 2rem;
+  flex-shrink: 0;
+}
+
+.ticker-sep {
+  color: rgba(255,255,255,0.25);
+  margin: 0 0.75rem;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ═══════════════════════════════════
@@ -688,7 +689,6 @@ footer {
   .services-header { position: static; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .service-card { min-height: 360px; }
-  .work-grid { grid-template-columns: 1fr; }
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
   .process-steps { grid-template-columns: repeat(3, 1fr); }
