@@ -138,17 +138,18 @@ nav {
 /* Line 1: cycling headline */
 .hero-h1 {
   font-family: var(--serif);
-  font-size: clamp(1.75rem, 2.5vw, 2.75rem);
+  font-size: clamp(1.75rem, 3vw, 3rem);
   font-weight: 600;
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--dark);
   margin-bottom: 0.15em;
-  max-width: 50%;
+  max-width: 80%;
+  white-space: nowrap;
 }
 
 .cycle-word {
-  display: block;
+  display: inline-block;
   font-style: italic;
   color: var(--muted);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -161,7 +162,7 @@ nav {
 /* Line 2: payoff — same size, lighter weight, hidden until scroll */
 .hero-payoff-line {
   font-family: var(--serif);
-  font-size: clamp(1.75rem, 2.5vw, 2.75rem);
+  font-size: clamp(1.75rem, 3vw, 3rem);
   font-weight: 400;
   font-style: italic;
   line-height: 1.05;
@@ -580,6 +581,7 @@ footer {
   .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
   .process-steps { grid-template-columns: 1fr 1fr; }
   .services-header { flex-direction: column; align-items: flex-start; }
+  .hero-h1 { white-space: normal; max-width: 100%; }
 }
 
 @media (max-width: 600px) {
