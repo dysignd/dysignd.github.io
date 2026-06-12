@@ -691,7 +691,8 @@ footer {
   .work-grid { grid-template-columns: 1fr; }
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
-  .process-steps { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: repeat(3, 1fr); }
+  .step-desc { display: none; }
   .hero-h1 { white-space: normal; max-width: 100%; }
 }
 
