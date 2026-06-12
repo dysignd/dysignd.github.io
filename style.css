@@ -315,16 +315,14 @@ nav {
 .services-header {
   margin-bottom: 5rem;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 2rem;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 .services-header-sub {
-  font-size: 0.9375rem;
+  font-size: 1.125rem;
   color: rgba(255,255,255,0.4);
-  max-width: 38ch;
-  line-height: 1.65;
+  max-width: 52ch;
+  line-height: 1.7;
 }
 
 .services-grid {
@@ -614,7 +612,6 @@ footer {
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
   .process-steps { grid-template-columns: 1fr 1fr; }
-  .services-header { flex-direction: column; align-items: flex-start; }
   .hero-h1 { white-space: normal; max-width: 100%; }
 }
 
