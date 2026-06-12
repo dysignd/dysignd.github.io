@@ -1,3 +1,12 @@
+// ── Process step: click to expand on touch/tablet ─────────
+document.querySelectorAll('.process-step').forEach(step => {
+  step.addEventListener('click', () => {
+    const isOpen = step.classList.contains('is-open');
+    document.querySelectorAll('.process-step').forEach(s => s.classList.remove('is-open'));
+    if (!isOpen) step.classList.add('is-open');
+  });
+});
+
 // ── Word cycling ──────────────────────────────
 const words = ['logo', 'video', 'post', 'brochure', 'pamphlet', 'sign'];
 let idx = 0;
