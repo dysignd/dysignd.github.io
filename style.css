@@ -47,9 +47,17 @@ nav {
 }
 
 .logo img {
-  height: 56px;
+  height: 40px;
   width: auto;
   display: block;
+}
+
+@media (min-width: 960px) {
+  .logo img { height: 56px; }
+}
+
+@media (min-width: 1280px) {
+  .logo img { height: 68px; }
 }
 
 .nav-right { display: flex; align-items: center; gap: 2.5rem; }
