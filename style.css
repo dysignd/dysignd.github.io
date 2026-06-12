@@ -54,10 +54,12 @@ nav {
 
 @media (min-width: 960px) {
   .logo img { height: 56px; }
+  .hero-sticky { padding-top: 96px; }
 }
 
 @media (min-width: 1280px) {
   .logo img { height: 68px; }
+  .hero-sticky { padding-top: 108px; }
 }
 
 .nav-right { display: flex; align-items: center; gap: 2.5rem; }
@@ -102,7 +104,7 @@ nav {
   height: 100vh;
   display: flex;
   align-items: center;
-  padding: 80px clamp(3rem, 8vw, 9rem) 0;
+  padding: 60px clamp(3rem, 8vw, 9rem) 0;
   background: var(--bg);
   overflow: hidden;
 }
