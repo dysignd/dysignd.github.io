@@ -18,8 +18,11 @@ const heroWrapper  = document.getElementById('hero');
 const payoffLine   = document.querySelector('.hero-payoff-line');
 const subPayoff    = document.querySelector('.hero-sub-payoff');
 const heroActions  = document.querySelector('.hero-actions');
+const clientsStrip = document.getElementById('clients');
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+let lastScrollY = window.scrollY;
 
 function onScroll() {
   const scrolled    = window.scrollY;
@@ -41,6 +44,15 @@ function onScroll() {
   const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.55) / 0.30)));
   heroActions.style.opacity   = actionsT;
   heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
+
+  // Clients strip: show on scroll up (past hero), hide on scroll down
+  const pastHero = scrolled > heroWrapper.offsetTop + heroWrapper.offsetHeight;
+  if (pastHero && scrolled < lastScrollY) {
+    clientsStrip.classList.add('is-visible');
+  } else {
+    clientsStrip.classList.remove('is-visible');
+  }
+  lastScrollY = scrolled;
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });

@@ -229,6 +229,25 @@ nav {
 #clients {
   background: var(--dark);
   padding: 2rem var(--gutter);
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  transform: translateY(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#clients.is-visible {
+  transform: translateY(0);
+}
+
+@media (min-width: 960px) {
+  #clients { top: 96px; }
+}
+
+@media (min-width: 1280px) {
+  #clients { top: 108px; }
 }
 .clients-inner {
   max-width: var(--max); margin: 0 auto;
