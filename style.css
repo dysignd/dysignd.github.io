@@ -177,11 +177,12 @@ nav {
 
 /* Line 3: sub-payoff — smaller, reveals just after payoff line */
 .hero-sub-payoff {
-  font-family: var(--sans, 'Inter', sans-serif);
-  font-size: clamp(0.875rem, 1.1vw, 1.1rem);
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.4vw, 1.4rem);
   font-weight: 400;
+  font-style: italic;
   color: var(--muted);
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   max-width: 50%;
   opacity: 0;
   transform: translateY(16px);
