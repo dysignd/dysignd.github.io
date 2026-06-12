@@ -175,6 +175,19 @@ nav {
   will-change: opacity, transform;
 }
 
+/* Line 3: sub-payoff — smaller, reveals just after payoff line */
+.hero-sub-payoff {
+  font-family: var(--sans, 'Inter', sans-serif);
+  font-size: clamp(0.875rem, 1.1vw, 1.1rem);
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 1rem;
+  max-width: 50%;
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: opacity, transform;
+}
+
 /* CTAs beneath payoff line, also revealed on scroll */
 .hero-actions {
   display: flex;

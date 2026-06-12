@@ -16,6 +16,7 @@ setTimeout(() => setInterval(cycleWord, 2200), 1800);
 // ── Scroll reveal: payoff line + CTAs ─────────
 const heroWrapper  = document.getElementById('hero');
 const payoffLine   = document.querySelector('.hero-payoff-line');
+const subPayoff    = document.querySelector('.hero-sub-payoff');
 const heroActions  = document.querySelector('.hero-actions');
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
@@ -31,8 +32,13 @@ function onScroll() {
   payoffLine.style.opacity   = payoffT;
   payoffLine.style.transform = `translateY(${(1 - payoffT) * 22}px)`;
 
-  // CTAs: follow slightly behind, 50% to 80%
-  const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.50) / 0.30)));
+  // Sub-payoff: follows payoff, 45% to 70%
+  const subT = easeOut(Math.min(1, Math.max(0, (raw - 0.45) / 0.25)));
+  subPayoff.style.opacity   = subT;
+  subPayoff.style.transform = `translateY(${(1 - subT) * 16}px)`;
+
+  // CTAs: follow slightly behind, 55% to 85%
+  const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.55) / 0.30)));
   heroActions.style.opacity   = actionsT;
   heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
 }
