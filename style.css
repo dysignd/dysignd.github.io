@@ -54,12 +54,12 @@ nav {
 
 @media (min-width: 960px) {
   .logo img { height: 56px; }
-  .hero-sticky { padding-top: 96px; }
+  .hero-sticky { top: 96px; height: calc(100vh - 96px); }
 }
 
 @media (min-width: 1280px) {
   .logo img { height: 68px; }
-  .hero-sticky { padding-top: 108px; }
+  .hero-sticky { top: 108px; height: calc(100vh - 108px); }
 }
 
 .nav-right { display: flex; align-items: center; gap: 2.5rem; }
@@ -97,14 +97,14 @@ nav {
   position: relative;
 }
 
-/* Sticky container: stays pinned, centered */
+/* Sticky container: stays pinned below nav, content centered in visible area */
 .hero-sticky {
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: 80px;
+  height: calc(100vh - 80px);
   display: flex;
   align-items: center;
-  padding: 60px clamp(3rem, 8vw, 9rem) 0;
+  padding: 0 clamp(3rem, 8vw, 9rem);
   background: var(--bg);
   overflow: hidden;
 }
