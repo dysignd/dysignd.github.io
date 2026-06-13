@@ -529,12 +529,14 @@ nav {
   background-image: var(--grid-dark);
   background-size: var(--grid-size);
   color: var(--white);
+  padding-bottom: 5rem;
 }
+#work .section-container { padding-bottom: 0; }
 #work .section-title { color: var(--white); }
 #work .section-tag { color: rgba(255,255,255,0.3); }
 #work .section-tag::before { background: rgba(255,255,255,0.2); }
 
-.work-framing { margin-bottom: 2rem; }
+.work-framing { margin-bottom: 1.5rem; }
 .work-sub {
   font-family: var(--serif);
   font-style: italic;
