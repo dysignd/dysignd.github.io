@@ -389,12 +389,13 @@ nav {
   transform: translate(-50%, -46%);
   width: 72%;
   height: auto;
-  opacity: 0.13;
+  opacity: 0.22;
   pointer-events: none;
-  filter: brightness(0) invert(1);
+  filter: invert(1);
+  mix-blend-mode: screen;
   transition: opacity 0.35s ease;
 }
-.service-card:hover .sc-illus { opacity: 0.05; }
+.service-card:hover .sc-illus { opacity: 0.08; }
 .service-card:hover { background: rgba(255,255,255,0.04); }
 
 .sc-top { display: flex; justify-content: space-between; align-items: flex-start; }
