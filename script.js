@@ -111,20 +111,18 @@ function onScroll() {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-// ── Ticker: rAF loop (no jump) + drag / swipe ─────────
+// ── Ticker: rAF loop (no jump) + scrub ─────────
 (function () {
   const wrapper = document.querySelector('.ticker-wrapper');
   const track   = document.querySelector('.ticker-track');
   if (!track || !wrapper) return;
 
-  const SPEED = 1.1; // px per frame at 60 fps
+  const SPEED = 0.38; // px per frame — matches original CSS 35s pace
   let pos      = 0;
   let dragging = false;
   let lastX    = 0;
 
   function half() { return track.scrollWidth / 2; }
-
-  // Keep pos in the range [-half, 0) for a seamless loop
   function norm(p) {
     const h = half();
     p = p % h;
@@ -138,22 +136,48 @@ onScroll();
     requestAnimationFrame(tick);
   }
 
-  function dragStart(x) { dragging = true; lastX = x; }
-  function dragMove(x)  {
+  function scrubMove(x) {
     if (!dragging) return;
-    pos  = norm(pos + (x - lastX));
+    pos = norm(pos + (x - lastX));
     lastX = x;
     track.style.transform = `translateX(${pos}px)`;
   }
-  function dragEnd()    { dragging = false; }
 
-  wrapper.addEventListener('mousedown',  e => dragStart(e.clientX));
-  window.addEventListener('mousemove',   e => dragMove(e.clientX));
-  window.addEventListener('mouseup',     dragEnd);
+  // Mouse scrub
+  wrapper.addEventListener('mousedown', e => { dragging = true; lastX = e.clientX; });
+  window.addEventListener('mousemove',  e => scrubMove(e.clientX));
+  window.addEventListener('mouseup',   () => { dragging = false; });
 
-  wrapper.addEventListener('touchstart', e => dragStart(e.touches[0].clientX), { passive: true });
-  wrapper.addEventListener('touchmove',  e => dragMove(e.touches[0].clientX),  { passive: true });
-  wrapper.addEventListener('touchend',   dragEnd);
+  // Trackpad horizontal swipe (wheel deltaX)
+  wrapper.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault();
+      pos = norm(pos - e.deltaX);
+      track.style.transform = `translateX(${pos}px)`;
+    }
+  }, { passive: false });
+
+  // Touch: only hijack horizontal gestures — vertical still scrolls the page
+  let tx0 = 0, ty0 = 0, dir = null;
+  wrapper.addEventListener('touchstart', e => {
+    tx0 = e.touches[0].clientX;
+    ty0 = e.touches[0].clientY;
+    lastX = tx0;
+    dir = null;
+  }, { passive: true });
+  wrapper.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - tx0);
+    const dy = Math.abs(e.touches[0].clientY - ty0);
+    if (!dir && (dx > 5 || dy > 5)) {
+      dir = dx > dy ? 'h' : 'v';
+      if (dir === 'h') dragging = true;
+    }
+    if (dir === 'h') {
+      e.preventDefault();
+      scrubMove(e.touches[0].clientX);
+    }
+  }, { passive: false });
+  wrapper.addEventListener('touchend', () => { dragging = false; dir = null; });
 
   requestAnimationFrame(tick);
 })();
