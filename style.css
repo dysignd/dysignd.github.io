@@ -332,7 +332,7 @@ nav {
 
 .section-title {
   font-family: var(--serif);
-  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  font-size: clamp(1.75rem, 3vw, 3rem);
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -347,7 +347,7 @@ nav {
   background-size: var(--grid-size);
   color: var(--white);
 }
-#services .section-title { color: var(--white); font-size: clamp(1.75rem, 3vw, 3rem); }
+#services .section-title { color: var(--white); }
 #services .section-tag { color: rgba(255,255,255,0.3); }
 #services .section-tag::before { background: rgba(255,255,255,0.2); }
 
@@ -519,9 +519,12 @@ nav {
 .process-header { margin-bottom: 5rem; }
 .process-header p {
   margin-top: 1.25rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.0625rem;
   color: var(--muted);
-  font-size: 0.9375rem;
   max-width: 44ch;
+  line-height: 1.7;
 }
 
 .process-steps {
@@ -674,9 +677,11 @@ nav {
   margin-top: 4rem;
 }
 .contact-left p {
-  font-size: 0.9375rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.0625rem;
   color: rgba(255,255,255,0.4);
-  line-height: 1.72;
+  line-height: 1.7;
   margin-top: 1.5rem;
   max-width: 36ch;
 }
