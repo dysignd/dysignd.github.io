@@ -699,14 +699,15 @@ footer {
 /* ═══════════════════════════════════
    SVG ILLUSTRATIONS
 ═══════════════════════════════════ */
-/* Hero — full-bleed line work behind content */
+/* Hero — right-anchored line work; text sits at top-left of image */
 .illus-hero {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
+  right: 0;
   height: 100%;
+  width: 78%;
   object-fit: cover;
-  object-position: center;
+  object-position: left top;
   opacity: 0.1;
   pointer-events: none;
 }
