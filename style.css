@@ -521,7 +521,7 @@ nav {
   margin-top: 1.25rem;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.0625rem;
+  font-size: clamp(1rem, 1.4vw, 1.4rem);
   color: var(--muted);
   max-width: 44ch;
   line-height: 1.7;
