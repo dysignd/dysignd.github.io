@@ -29,11 +29,19 @@ const subPayoff    = document.querySelector('.hero-sub-payoff');
 const heroActions  = document.querySelector('.hero-actions');
 const clientsStrip = document.getElementById('clients'); // may be null if removed
 const scrollHint   = document.querySelector('.hero-scroll-hint');
+const heroIllus    = document.querySelector('.illus-hero');
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
 let lastScrollY = window.scrollY;
 let mobileRevealed = false;
+let illusRevealed  = false;
+
+function revealIllus() {
+  if (illusRevealed || !heroIllus) return;
+  illusRevealed = true;
+  heroIllus.classList.add('is-revealed');
+}
 
 function revealFull() {
   if (mobileRevealed) return;
@@ -51,6 +59,7 @@ function revealFull() {
   heroActions.style.transform = 'translateY(0)';
 
   if (scrollHint) scrollHint.classList.add('is-hidden');
+  revealIllus();
 
   const y = window.scrollY;
   document.body.style.overflow = 'hidden';
@@ -80,6 +89,9 @@ function onScroll() {
   const heroTop    = heroWrapper.offsetTop;
   const scrollRoom = heroWrapper.offsetHeight - window.innerHeight;
   const raw        = Math.min(1, Math.max(0, (scrolled - heroTop) / scrollRoom));
+
+  // Trigger illustration draw-in at the same threshold as the payoff text
+  if (raw > 0.28) revealIllus();
 
   const payoffT  = easeOut(Math.min(1, Math.max(0, (raw - 0.30) / 0.35)));
   payoffLine.style.opacity   = payoffT;

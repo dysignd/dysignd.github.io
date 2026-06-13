@@ -708,8 +708,16 @@ footer {
   width: 78%;
   object-fit: cover;
   object-position: left top;
-  opacity: 0.1;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition:
+    clip-path 1.6s cubic-bezier(0.65, 0, 0.35, 1) 0.1s,
+    opacity   0.5s ease 0.1s;
   pointer-events: none;
+}
+.illus-hero.is-revealed {
+  opacity: 0.1;
+  clip-path: inset(0 0% 0 0);
 }
 
 /* Process — drawing compass, top-right of header */
