@@ -378,7 +378,23 @@ nav {
   flex-direction: column;
   justify-content: space-between;
   transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
 }
+
+.sc-illus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -46%);
+  width: 72%;
+  height: auto;
+  opacity: 0.13;
+  pointer-events: none;
+  filter: brightness(0) invert(1);
+  transition: opacity 0.35s ease;
+}
+.service-card:hover .sc-illus { opacity: 0.05; }
 .service-card:hover { background: rgba(255,255,255,0.04); }
 
 .sc-top { display: flex; justify-content: space-between; align-items: flex-start; }
@@ -414,12 +430,16 @@ nav {
   pointer-events: auto;
 }
 .sc-name {
-  font-family: var(--serif);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 0.75rem;
-  line-height: 1.2;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 0.875rem;
+  line-height: 1.5;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  padding-top: 0.625rem;
 }
 .sc-desc {
   font-size: 0.8125rem;
