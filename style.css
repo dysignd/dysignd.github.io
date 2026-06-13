@@ -12,20 +12,21 @@
   --border:   #CFC9C1;
   --white:    #FFFFFF;
 
-  --serif:    'Cormorant Garamond', Georgia, serif;
+  --serif:    'Playfair Display', 'Cormorant Garamond', Georgia, serif;
   --sans:     'Inter', system-ui, sans-serif;
-  --mono:     'Courier New', Courier, monospace;
+  --mono:     'IBM Plex Mono', 'Space Mono', ui-monospace, monospace;
 
   --max:      1200px;
   --gutter:   clamp(1.25rem, 4vw, 2.5rem);
 
-  --grid-light:
-    linear-gradient(rgba(42,37,32,0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(42,37,32,0.055) 1px, transparent 1px);
+  /* Paper bg: dot grid per spec (faint, structural) */
+  --grid-light: radial-gradient(circle, rgba(42,37,32,0.11) 1px, transparent 1px);
+  --grid-size-light: 22px 22px;
+  /* Blueprint sections: cream grid per spec */
   --grid-dark:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  --grid-size: 44px 44px;
+    linear-gradient(rgba(245,240,232,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,240,232,0.06) 1px, transparent 1px);
+  --grid-size: 34px 34px;
 }
 
 /* ═══════════════════════════════════
@@ -114,7 +115,7 @@ nav {
   padding: 0 clamp(3rem, 8vw, 9rem);
   background: var(--bg);
   background-image: var(--grid-light);
-  background-size: var(--grid-size);
+  background-size: var(--grid-size-light);
   overflow: hidden;
 }
 
@@ -696,6 +697,60 @@ footer {
 }
 
 /* ═══════════════════════════════════
+   SVG ILLUSTRATIONS
+═══════════════════════════════════ */
+/* Hero — scaffold framework, right side */
+.illus-hero {
+  position: absolute;
+  right: clamp(1.5rem, 5vw, 5rem);
+  top: 50%;
+  transform: translateY(-50%);
+  height: 54%;
+  width: auto;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Process — drawing compass, top-right of header */
+#process { position: relative; overflow: hidden; }
+.illus-process {
+  position: absolute;
+  top: 4.5rem;
+  right: var(--gutter);
+  height: 155px;
+  width: auto;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* About — compass rose centered behind left-column heading */
+#about { position: relative; overflow: hidden; }
+.about-left { position: relative; }
+.illus-about {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 260px;
+  width: auto;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+/* Contact — annotation callout, bottom-right of contact-left */
+#contact { position: relative; overflow: hidden; }
+.contact-left { position: relative; }
+.illus-contact {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -1rem;
+  height: 105px;
+  width: auto;
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════ */
 @media (max-width: 960px) {
@@ -769,6 +824,7 @@ footer {
 }
 
 @media (max-width: 600px) {
+  .illus-hero, .illus-process, .illus-about, .illus-contact { display: none; }
   .nav-links { display: none; }
   .hero-wrapper { height: 150vh; }
   .process-steps { grid-template-columns: 1fr; }

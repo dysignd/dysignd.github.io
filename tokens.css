@@ -1,0 +1,95 @@
+/* ============================================================
+   byShanks&Son — Visual System Tokens
+   Draftsman / technical-drawing aesthetic with blueprint depth.
+   Drop this into the codebase and reference the custom properties.
+   ============================================================ */
+
+:root {
+  /* ---- Colour ---- */
+  --bs-cream:        #F5F0E8; /* primary background — warm aged paper */
+  --bs-ink:          #1C1C1A; /* primary text — deep charcoal */
+  --bs-linework:     #2A2520; /* line-work stroke (use at 40–60% opacity) */
+  --bs-slate:        #1B2A3B; /* blueprint accent — footer / one section bg only */
+  --bs-forest:       #3B4A3F; /* nature accent — CTA buttons & highlights only */
+
+  /* Tints used in the reference UI */
+  --bs-panel:        #FBF8F2; /* slightly lighter cream for cards/cells */
+  --bs-cream-65:     #b0aa9e;
+  --bs-cream-on-slate: rgba(245,240,232,0.78);
+
+  /* Line-work opacity per spec: illustrations sit BEHIND content */
+  --bs-linework-opacity: 0.40; /* 0.30–0.45 behind content; up to 0.60 inline */
+
+  /* ---- Grid / texture overlays ---- */
+  --bs-dot-grid:  radial-gradient(circle, rgba(42,37,32,0.11) 1px, transparent 1px);
+  --bs-dot-size:  22px 22px;
+  /* Blueprint sections: faint cream grid over slate */
+  --bs-blue-grid:
+    linear-gradient(rgba(245,240,232,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,240,232,0.06) 1px, transparent 1px);
+  --bs-blue-grid-size: 34px 34px;
+
+  /* ---- Typography ---- */
+  --bs-font-display: "Playfair Display", "Cormorant Garamond", Georgia, serif; /* headlines */
+  --bs-font-body:    "Inter", "DM Sans", system-ui, sans-serif;                /* body copy */
+  --bs-font-mono:    "IBM Plex Mono", "Space Mono", ui-monospace, monospace;   /* labels / annotations */
+
+  /* Display scale (classical serif, weight 500–600, tight tracking) */
+  --bs-display-lg: 46px;  --bs-display-md: 30px;
+  --bs-display-tracking: -0.5px; --bs-display-leading: 1.1;
+
+  /* Mono label convention: uppercase, generous tracking */
+  --bs-label-size: 12px; --bs-label-tracking: 1.5px;
+  /* Always: text-transform: uppercase on mono labels */
+
+  /* ---- Stroke ---- */
+  --bs-stroke-width: 1.4; /* matches the SVG library */
+
+  /* ---- Spacing rhythm (the system favours wide margins) ---- */
+  --bs-gap: 24px;
+  --bs-section-gap: 62px;
+  --bs-page-pad: 56px 48px;
+}
+
+/* Convenience surfaces ------------------------------------ */
+.bs-paper {
+  background-color: var(--bs-cream);
+  background-image: var(--bs-dot-grid);
+  background-size: var(--bs-dot-size);
+  color: var(--bs-ink);
+  font-family: var(--bs-font-body);
+}
+.bs-blueprint {
+  background-color: var(--bs-slate);
+  background-image: var(--bs-blue-grid);
+  background-size: var(--bs-blue-grid-size);
+  color: var(--bs-cream);
+}
+
+/* Mono annotation label ----------------------------------- */
+.bs-label {
+  font-family: var(--bs-font-mono);
+  font-size: var(--bs-label-size);
+  letter-spacing: var(--bs-label-tracking);
+  text-transform: uppercase;
+  color: #6f6a60;
+}
+
+/* Line-work illustration default (place behind content) ---- */
+.bs-linework {
+  opacity: var(--bs-linework-opacity);
+  pointer-events: none;
+}
+
+/* Primary / secondary CTA --------------------------------- */
+.bs-cta {
+  font-family: var(--bs-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 13px;
+  padding: 14px 22px;
+  border: 1px solid var(--bs-forest);
+  cursor: pointer;
+}
+.bs-cta--primary   { background: var(--bs-forest); color: var(--bs-cream); border-color: var(--bs-forest); }
+.bs-cta--secondary { background: transparent; color: var(--bs-ink); border-color: rgba(42,37,32,0.3); }
