@@ -769,6 +769,7 @@ footer {
 
 @media (max-width: 600px) {
   .nav-links { display: none; }
+  .hero-wrapper { height: 110vh; }
   .process-steps { grid-template-columns: 1fr; }
   .hero-h1 { max-width: 100%; font-size: clamp(2.5rem, 11vw, 4rem); }
   .hero-payoff-line { max-width: 100%; font-size: clamp(2.5rem, 11vw, 4rem); }
