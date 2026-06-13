@@ -492,8 +492,10 @@ nav {
 
 .illus-process-bg {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  left: calc(-1 * var(--gutter));
+  top: 50%;
+  transform: translateY(-50%);
+  width: 80%;
   height: 100%;
   object-fit: cover;
   object-position: left center;
