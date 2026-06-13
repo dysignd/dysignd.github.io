@@ -122,9 +122,16 @@ onScroll();
   let dragging = false;
   let lastX    = 0;
 
-  function half() { return track.scrollWidth / 2; }
+  // Measure the first span directly — avoids divide-by-2 rounding and
+  // survives font-load reflows; guard against zero before fonts settle.
+  function half() {
+    const w = track.children[0].offsetWidth;
+    return w > 0 ? w : track.scrollWidth / 2;
+  }
+
   function norm(p) {
     const h = half();
+    if (!h) return p;        // not yet laid out — hold position
     p = p % h;
     if (p > 0) p -= h;
     return p;
@@ -179,5 +186,8 @@ onScroll();
   }, { passive: false });
   wrapper.addEventListener('touchend', () => { dragging = false; dir = null; });
 
-  requestAnimationFrame(tick);
+  // Wait for fonts before starting so offsetWidth is accurate
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+    requestAnimationFrame(tick);
+  });
 })();
