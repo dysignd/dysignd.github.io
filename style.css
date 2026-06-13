@@ -550,11 +550,14 @@ nav {
   padding: 2.25rem 0;
   border-top: 1px solid rgba(255,255,255,0.08);
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  cursor: grab;
+  user-select: none;
 }
+.ticker-wrapper:active { cursor: grabbing; }
 .ticker-track {
   display: flex;
   white-space: nowrap;
-  animation: ticker 35s linear infinite;
+  will-change: transform;
 }
 .ticker-inner {
   font-family: var(--serif);
@@ -567,10 +570,6 @@ nav {
 .ticker-sep {
   color: rgba(255,255,255,0.2);
   margin: 0 0.75rem;
-}
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
 }
 
 /* ═══════════════════════════════════

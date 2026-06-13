@@ -110,3 +110,50 @@ function onScroll() {
 
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
+
+// ── Ticker: rAF loop (no jump) + drag / swipe ─────────
+(function () {
+  const wrapper = document.querySelector('.ticker-wrapper');
+  const track   = document.querySelector('.ticker-track');
+  if (!track || !wrapper) return;
+
+  const SPEED = 1.1; // px per frame at 60 fps
+  let pos      = 0;
+  let dragging = false;
+  let lastX    = 0;
+
+  function half() { return track.scrollWidth / 2; }
+
+  // Keep pos in the range [-half, 0) for a seamless loop
+  function norm(p) {
+    const h = half();
+    p = p % h;
+    if (p > 0) p -= h;
+    return p;
+  }
+
+  function tick() {
+    if (!dragging) pos = norm(pos - SPEED);
+    track.style.transform = `translateX(${pos}px)`;
+    requestAnimationFrame(tick);
+  }
+
+  function dragStart(x) { dragging = true; lastX = x; }
+  function dragMove(x)  {
+    if (!dragging) return;
+    pos  = norm(pos + (x - lastX));
+    lastX = x;
+    track.style.transform = `translateX(${pos}px)`;
+  }
+  function dragEnd()    { dragging = false; }
+
+  wrapper.addEventListener('mousedown',  e => dragStart(e.clientX));
+  window.addEventListener('mousemove',   e => dragMove(e.clientX));
+  window.addEventListener('mouseup',     dragEnd);
+
+  wrapper.addEventListener('touchstart', e => dragStart(e.touches[0].clientX), { passive: true });
+  wrapper.addEventListener('touchmove',  e => dragMove(e.touches[0].clientX),  { passive: true });
+  wrapper.addEventListener('touchend',   dragEnd);
+
+  requestAnimationFrame(tick);
+})();
