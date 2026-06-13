@@ -494,7 +494,7 @@ nav {
   position: absolute;
   right: calc(-1 * var(--gutter));
   top: 50%;
-  transform: translateY(-50%) scaleX(-1);
+  transform: translateY(-50%);
   width: 80%;
   height: 100%;
   object-fit: cover;
