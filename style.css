@@ -534,7 +534,7 @@ nav {
 #work .section-tag { color: rgba(255,255,255,0.3); }
 #work .section-tag::before { background: rgba(255,255,255,0.2); }
 
-.work-framing { margin-bottom: 5rem; }
+.work-framing { margin-bottom: 2rem; }
 .work-sub {
   font-family: var(--serif);
   font-style: italic;
