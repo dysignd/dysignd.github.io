@@ -499,7 +499,7 @@ nav {
   height: 100%;
   object-fit: cover;
   object-position: right center;
-  opacity: 0.4;
+  opacity: 0.62;
   pointer-events: none;
 }
 
@@ -514,11 +514,13 @@ nav {
 .process-steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
+  gap: 0;
 }
-.process-step { background: transparent; padding: 3rem 2.5rem; }
+.process-step {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 3rem 2.5rem;
+}
 
 .step-num {
   font-family: var(--mono);
