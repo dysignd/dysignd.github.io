@@ -517,7 +517,7 @@ nav {
 #process .section-container { position: relative; z-index: 1; }
 
 .process-header { margin-bottom: 5rem; }
-.process-header p {
+.process-header p:not(.section-anno) {
   margin-top: 1.25rem;
   font-family: var(--serif);
   font-style: italic;
