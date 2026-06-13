@@ -27,7 +27,7 @@ const heroWrapper  = document.getElementById('hero');
 const payoffLine   = document.querySelector('.hero-payoff-line');
 const subPayoff    = document.querySelector('.hero-sub-payoff');
 const heroActions  = document.querySelector('.hero-actions');
-const clientsStrip = document.getElementById('clients');
+const clientsStrip = document.getElementById('clients'); // may be null if removed
 const scrollHint   = document.querySelector('.hero-scroll-hint');
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
@@ -39,7 +39,6 @@ function revealFull() {
   if (mobileRevealed) return;
   mobileRevealed = true;
 
-  // Set transitions before animating so the reveal is smooth
   payoffLine.style.transition  = 'opacity 0.85s ease, transform 0.85s ease';
   subPayoff.style.transition   = 'opacity 0.85s ease 0.15s, transform 0.85s ease 0.15s';
   heroActions.style.transition = 'opacity 0.85s ease 0.3s, transform 0.85s ease 0.3s';
@@ -53,8 +52,6 @@ function revealFull() {
 
   if (scrollHint) scrollHint.classList.add('is-hidden');
 
-  // Freeze scroll while the animation plays so iOS momentum can't fly past the payoff.
-  // iOS-safe technique: fix body at current scroll position, restore after animation completes.
   const y = window.scrollY;
   document.body.style.overflow = 'hidden';
   document.body.style.position = 'fixed';
@@ -74,8 +71,6 @@ function isMobile() { return window.innerWidth <= 600; }
 function onScroll() {
   const scrolled = window.scrollY;
 
-  // On mobile, a tiny scroll triggers full auto-reveal; after that skip the
-  // incremental logic so the transition styles set by revealFull() aren't overridden
   if (isMobile()) {
     if (!mobileRevealed && scrolled > 20) revealFull();
     lastScrollY = scrolled;
@@ -98,13 +93,13 @@ function onScroll() {
   heroActions.style.opacity   = actionsT;
   heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
 
-  // Clients strip: show on scroll up (past hero), hide on scroll down
-  const pastHero = scrolled > heroWrapper.offsetTop + heroWrapper.offsetHeight;
-  if (pastHero && scrolled < lastScrollY) {
-    clientsStrip.classList.add('is-visible');
-  } else {
-    clientsStrip.classList.remove('is-visible');
+  // Clients strip is optional — only toggle if element exists
+  if (clientsStrip) {
+    const pastHero = scrolled > heroWrapper.offsetTop + heroWrapper.offsetHeight;
+    if (pastHero && scrolled < lastScrollY) clientsStrip.classList.add('is-visible');
+    else clientsStrip.classList.remove('is-visible');
   }
+
   lastScrollY = scrolled;
 }
 
@@ -117,35 +112,35 @@ onScroll();
   const track   = document.querySelector('.ticker-track');
   if (!track || !wrapper) return;
 
-  const SPEED = 0.38; // px per frame — matches original CSS 35s pace
+  const SPEED = 0.38;
   let pos      = 0;
+  let copyW    = 0;   // width of one copy; measured lazily
   let dragging = false;
   let lastX    = 0;
 
-  // Measure the first span directly — avoids divide-by-2 rounding and
-  // survives font-load reflows; guard against zero before fonts settle.
-  function half() {
-    const w = track.children[0].offsetWidth;
-    return w > 0 ? w : track.scrollWidth / 2;
-  }
-
-  function norm(p) {
-    const h = half();
-    if (!h) return p;        // not yet laid out — hold position
-    p = p % h;
-    if (p > 0) p -= h;
-    return p;
-  }
-
   function tick() {
-    if (!dragging) pos = norm(pos - SPEED);
+    // Measure lazily each frame until layout settles and font loads
+    if (!copyW) copyW = track.children[0].offsetWidth;
+
+    if (copyW && !dragging) {
+      pos -= SPEED;
+      if (pos <= -copyW) pos += copyW; // seamless loop
+    }
+
     track.style.transform = `translateX(${pos}px)`;
     requestAnimationFrame(tick);
   }
 
+  function clamp(p) {
+    if (!copyW) return p;
+    while (p > 0)      p -= copyW;
+    while (p < -copyW) p += copyW;
+    return p;
+  }
+
   function scrubMove(x) {
     if (!dragging) return;
-    pos = norm(pos + (x - lastX));
+    pos = clamp(pos + (x - lastX));
     lastX = x;
     track.style.transform = `translateX(${pos}px)`;
   }
@@ -155,16 +150,16 @@ onScroll();
   window.addEventListener('mousemove',  e => scrubMove(e.clientX));
   window.addEventListener('mouseup',   () => { dragging = false; });
 
-  // Trackpad horizontal swipe (wheel deltaX)
+  // Trackpad horizontal swipe
   wrapper.addEventListener('wheel', e => {
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
       e.preventDefault();
-      pos = norm(pos - e.deltaX);
+      pos = clamp(pos - e.deltaX);
       track.style.transform = `translateX(${pos}px)`;
     }
   }, { passive: false });
 
-  // Touch: only hijack horizontal gestures — vertical still scrolls the page
+  // Touch: horizontal gesture scrubs, vertical scrolls the page
   let tx0 = 0, ty0 = 0, dir = null;
   wrapper.addEventListener('touchstart', e => {
     tx0 = e.touches[0].clientX;
@@ -186,8 +181,6 @@ onScroll();
   }, { passive: false });
   wrapper.addEventListener('touchend', () => { dragging = false; dir = null; });
 
-  // Wait for fonts before starting so offsetWidth is accurate
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
-    requestAnimationFrame(tick);
-  });
+  // Start immediately — copyW will be set on the first frame with a non-zero measurement
+  requestAnimationFrame(tick);
 })();
