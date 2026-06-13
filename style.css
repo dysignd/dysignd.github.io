@@ -501,7 +501,9 @@ nav {
   object-position: right center;
   opacity: 0.62;
   pointer-events: none;
+  z-index: 0;
 }
+#process .section-container { position: relative; z-index: 1; }
 
 .process-header { margin-bottom: 5rem; }
 .process-header p {
