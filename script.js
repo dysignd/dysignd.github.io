@@ -28,28 +28,57 @@ const payoffLine   = document.querySelector('.hero-payoff-line');
 const subPayoff    = document.querySelector('.hero-sub-payoff');
 const heroActions  = document.querySelector('.hero-actions');
 const clientsStrip = document.getElementById('clients');
+const scrollHint   = document.querySelector('.hero-scroll-hint');
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
 let lastScrollY = window.scrollY;
+let mobileRevealed = false;
+
+function revealFull() {
+  if (mobileRevealed) return;
+  mobileRevealed = true;
+
+  // Set transitions before animating so the reveal is smooth
+  payoffLine.style.transition  = 'opacity 0.85s ease, transform 0.85s ease';
+  subPayoff.style.transition   = 'opacity 0.85s ease 0.15s, transform 0.85s ease 0.15s';
+  heroActions.style.transition = 'opacity 0.85s ease 0.3s, transform 0.85s ease 0.3s';
+
+  payoffLine.style.opacity  = '1';
+  payoffLine.style.transform = 'translateY(0)';
+  subPayoff.style.opacity   = '1';
+  subPayoff.style.transform  = 'translateY(0)';
+  heroActions.style.opacity  = '1';
+  heroActions.style.transform = 'translateY(0)';
+
+  if (scrollHint) scrollHint.classList.add('is-hidden');
+}
+
+function isMobile() { return window.innerWidth <= 600; }
 
 function onScroll() {
-  const scrolled    = window.scrollY;
-  const heroTop     = heroWrapper.offsetTop;
-  const scrollRoom  = heroWrapper.offsetHeight - window.innerHeight;
-  const raw         = Math.min(1, Math.max(0, (scrolled - heroTop) / scrollRoom));
+  const scrolled = window.scrollY;
 
-  // Payoff line: starts appearing at 30% scroll, fully in at 65%
+  // On mobile, a tiny scroll triggers full auto-reveal; after that skip the
+  // incremental logic so the transition styles set by revealFull() aren't overridden
+  if (isMobile()) {
+    if (!mobileRevealed && scrolled > 20) revealFull();
+    lastScrollY = scrolled;
+    return;
+  }
+
+  const heroTop    = heroWrapper.offsetTop;
+  const scrollRoom = heroWrapper.offsetHeight - window.innerHeight;
+  const raw        = Math.min(1, Math.max(0, (scrolled - heroTop) / scrollRoom));
+
   const payoffT  = easeOut(Math.min(1, Math.max(0, (raw - 0.30) / 0.35)));
   payoffLine.style.opacity   = payoffT;
   payoffLine.style.transform = `translateY(${(1 - payoffT) * 22}px)`;
 
-  // Sub-payoff: follows payoff, 45% to 70%
   const subT = easeOut(Math.min(1, Math.max(0, (raw - 0.45) / 0.25)));
   subPayoff.style.opacity   = subT;
   subPayoff.style.transform = `translateY(${(1 - subT) * 16}px)`;
 
-  // CTAs: follow slightly behind, 55% to 85%
   const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.55) / 0.30)));
   heroActions.style.opacity   = actionsT;
   heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
@@ -66,11 +95,3 @@ function onScroll() {
 
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
-
-// Hide scroll hint once user starts scrolling
-const scrollHint = document.querySelector('.hero-scroll-hint');
-if (scrollHint) {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) scrollHint.classList.add('is-hidden');
-  }, { passive: true, once: false });
-}
