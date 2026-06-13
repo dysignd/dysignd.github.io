@@ -518,7 +518,12 @@ nav {
   background: var(--border);
   border: 1px solid var(--border);
 }
-.process-step { background: var(--bg); padding: 3rem 2.5rem; }
+.process-step {
+  background: rgba(245, 240, 232, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 3rem 2.5rem;
+}
 
 .step-num {
   font-family: var(--mono);
