@@ -519,7 +519,7 @@ nav {
   gap: 0;
 }
 .process-step {
-  background: rgba(245, 240, 232, 0.5);
+  background: rgba(245, 240, 232, 0.78);
   border: 1px solid var(--border);
   padding: 3rem 2.5rem;
 }
