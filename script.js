@@ -65,4 +65,12 @@ function onScroll() {
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
-onScroll(); // run once on load in case page is already scrolled
+onScroll();
+
+// Hide scroll hint once user starts scrolling
+const scrollHint = document.querySelector('.hero-scroll-hint');
+if (scrollHint) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) scrollHint.classList.add('is-hidden');
+  }, { passive: true, once: false });
+}
