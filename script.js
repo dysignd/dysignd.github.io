@@ -44,14 +44,29 @@ function revealFull() {
   subPayoff.style.transition   = 'opacity 0.85s ease 0.15s, transform 0.85s ease 0.15s';
   heroActions.style.transition = 'opacity 0.85s ease 0.3s, transform 0.85s ease 0.3s';
 
-  payoffLine.style.opacity  = '1';
+  payoffLine.style.opacity   = '1';
   payoffLine.style.transform = 'translateY(0)';
-  subPayoff.style.opacity   = '1';
+  subPayoff.style.opacity    = '1';
   subPayoff.style.transform  = 'translateY(0)';
   heroActions.style.opacity  = '1';
   heroActions.style.transform = 'translateY(0)';
 
   if (scrollHint) scrollHint.classList.add('is-hidden');
+
+  // Freeze scroll while the animation plays so iOS momentum can't fly past the payoff.
+  // iOS-safe technique: fix body at current scroll position, restore after animation completes.
+  const y = window.scrollY;
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top      = `-${y}px`;
+  document.body.style.width    = '100%';
+  setTimeout(() => {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top      = '';
+    document.body.style.width    = '';
+    window.scrollTo(0, y);
+  }, 1200);
 }
 
 function isMobile() { return window.innerWidth <= 600; }
