@@ -533,48 +533,58 @@ nav {
   }
 }
 
-/* Touch: card is the CTA — no button, no footer, whole card taps to contact */
+/* Touch: card sizes to content — sc-front is illustration background, sc-back is in flow */
 @media (hover: none) {
-  .sc-front, .sc-back {
+  /* Block layout lets card shrink-wrap its content */
+  .service-card { min-height: 0; cursor: pointer; display: block; }
+  .sc-inner { display: block; position: relative; }
+  .service-card:active { opacity: 0.8; transition: opacity 0.1s; }
+
+  /* Front: decorative background only — floats behind */
+  .sc-front {
     position: absolute;
     inset: 0;
-    padding: 1.75rem;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
   }
-  .sc-front { justify-content: space-between; }
-  .sc-illus { opacity: 0.15; }
+  .sc-illus { opacity: 0.12; }
+
+  /* Back: in normal flow — defines the card height */
   .sc-back {
+    position: relative;
+    inset: auto;
     transform: none;
     background: transparent;
-    justify-content: flex-end;
+    padding: 3.25rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
     pointer-events: auto;
   }
   .sc-back .sc-body {
     opacity: 1;
     transform: none;
     pointer-events: auto;
-    padding-bottom: 2rem;
   }
+  .sc-name { font-size: 0.6rem; margin-bottom: 0.75rem; }
+  .sc-desc { margin-bottom: 0.75rem; }
+  .sc-bullets { margin-bottom: 1.5rem; }
 
-  /* Hide the button and the duplicate footer label */
+  /* Hide button and duplicate footer */
   .sc-cta { display: none; }
   .sc-foot { display: none; }
 
-  /* Card is tappable */
-  .service-card { cursor: pointer; }
-  .service-card:active { opacity: 0.8; transition: opacity 0.1s; }
-
-  /* Subtle arrow in the bottom-right — the only tap hint needed */
+  /* Arrow tap hint — sits at bottom-right of sc-back */
   .sc-back::after {
     content: '→';
-    position: absolute;
-    bottom: 1.5rem;
-    right: 1.75rem;
+    display: block;
+    text-align: right;
     font-family: var(--mono);
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.22);
-    pointer-events: none;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.25);
+    margin-top: 0.25rem;
   }
 }
 .sc-icon {
@@ -990,4 +1000,10 @@ footer {
   .services-grid { grid-template-columns: 1fr; }
   .service-card { min-height: 300px; }
   .hero-coords { display: none; }
+}
+
+/* Override: touch devices shrink-wrap cards to their content, no fixed height */
+@media (hover: none) {
+  .service-card { min-height: 0; display: block; }
+  .sc-inner { display: block; position: relative; }
 }
