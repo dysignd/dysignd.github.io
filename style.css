@@ -117,6 +117,8 @@ nav {
   background-image: var(--grid-light);
   background-size: var(--grid-size-light);
   overflow: hidden;
+  will-change: transform;
+  touch-action: pan-y;
 }
 
 /* annotation label above headline */

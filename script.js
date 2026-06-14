@@ -56,8 +56,10 @@ const heroIllus    = document.querySelector('.illus-hero');
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
 let lastScrollY = window.scrollY;
-let mobileRevealed = false;
-let illusRevealed  = false;
+let illusRevealed = false;
+let rafPending    = false;
+
+function isMobile() { return window.innerWidth <= 600; }
 
 function revealIllus() {
   if (illusRevealed || !heroIllus) return;
@@ -65,79 +67,57 @@ function revealIllus() {
   heroIllus.classList.add('is-revealed');
 }
 
-function revealFull() {
-  if (mobileRevealed) return;
-  mobileRevealed = true;
-
-  payoffLine.style.transition  = 'opacity 0.85s ease, transform 0.85s ease';
-  subPayoff.style.transition   = 'opacity 0.85s ease 0.15s, transform 0.85s ease 0.15s';
-  heroActions.style.transition = 'opacity 0.85s ease 0.3s, transform 0.85s ease 0.3s';
-
-  payoffLine.style.opacity   = '1';
-  payoffLine.style.transform = 'translateY(0)';
-  subPayoff.style.opacity    = '1';
-  subPayoff.style.transform  = 'translateY(0)';
-  heroActions.style.opacity  = '1';
-  heroActions.style.transform = 'translateY(0)';
-
-  if (scrollHint) scrollHint.classList.add('is-hidden');
-  revealIllus();
-
-  const y = window.scrollY;
-  document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.top      = `-${y}px`;
-  document.body.style.width    = '100%';
-  setTimeout(() => {
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top      = '';
-    document.body.style.width    = '';
-    window.scrollTo(0, y);
-  }, 1200);
-}
-
-function isMobile() { return window.innerWidth <= 600; }
-
 function onScroll() {
-  const scrolled = window.scrollY;
-
-  if (isMobile()) {
-    if (!mobileRevealed && scrolled > 20) revealFull();
-    lastScrollY = scrolled;
-    return;
-  }
-
+  const scrolled   = window.scrollY;
   const heroTop    = heroWrapper.offsetTop;
   const scrollRoom = heroWrapper.offsetHeight - window.innerHeight;
   const raw        = Math.min(1, Math.max(0, (scrolled - heroTop) / scrollRoom));
 
-  // Trigger illustration draw-in at the same threshold as the payoff text
   if (raw > 0.28) revealIllus();
+  if (scrollHint && raw > 0.06) scrollHint.classList.add('is-hidden');
 
-  const payoffT  = easeOut(Math.min(1, Math.max(0, (raw - 0.30) / 0.35)));
-  payoffLine.style.opacity   = payoffT;
-  payoffLine.style.transform = `translateY(${(1 - payoffT) * 22}px)`;
+  if (isMobile()) {
+    // Progressive reveal tied directly to scroll position — no body lock
+    const payoffT  = easeOut(Math.min(1, Math.max(0, (raw - 0.15) / 0.4)));
+    payoffLine.style.opacity   = payoffT;
+    payoffLine.style.transform = `translateY(${(1 - payoffT) * 22}px)`;
 
-  const subT = easeOut(Math.min(1, Math.max(0, (raw - 0.45) / 0.25)));
-  subPayoff.style.opacity   = subT;
-  subPayoff.style.transform = `translateY(${(1 - subT) * 16}px)`;
+    const subT = easeOut(Math.min(1, Math.max(0, (raw - 0.38) / 0.35)));
+    subPayoff.style.opacity   = subT;
+    subPayoff.style.transform = `translateY(${(1 - subT) * 16}px)`;
 
-  const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.55) / 0.30)));
-  heroActions.style.opacity   = actionsT;
-  heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
+    const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.6) / 0.3)));
+    heroActions.style.opacity   = actionsT;
+    heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
+  } else {
+    const payoffT  = easeOut(Math.min(1, Math.max(0, (raw - 0.30) / 0.35)));
+    payoffLine.style.opacity   = payoffT;
+    payoffLine.style.transform = `translateY(${(1 - payoffT) * 22}px)`;
 
-  // Clients strip is optional — only toggle if element exists
-  if (clientsStrip) {
-    const pastHero = scrolled > heroWrapper.offsetTop + heroWrapper.offsetHeight;
-    if (pastHero && scrolled < lastScrollY) clientsStrip.classList.add('is-visible');
-    else clientsStrip.classList.remove('is-visible');
+    const subT = easeOut(Math.min(1, Math.max(0, (raw - 0.45) / 0.25)));
+    subPayoff.style.opacity   = subT;
+    subPayoff.style.transform = `translateY(${(1 - subT) * 16}px)`;
+
+    const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.55) / 0.30)));
+    heroActions.style.opacity   = actionsT;
+    heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
+
+    if (clientsStrip) {
+      const pastHero = scrolled > heroWrapper.offsetTop + heroWrapper.offsetHeight;
+      if (pastHero && scrolled < lastScrollY) clientsStrip.classList.add('is-visible');
+      else clientsStrip.classList.remove('is-visible');
+    }
   }
 
   lastScrollY = scrolled;
 }
 
-window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('scroll', () => {
+  if (!rafPending) {
+    rafPending = true;
+    requestAnimationFrame(() => { onScroll(); rafPending = false; });
+  }
+}, { passive: true });
 onScroll();
 
 // ── Ticker: rAF loop (no jump) + scrub ─────────
