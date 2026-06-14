@@ -522,17 +522,6 @@ nav {
 .sc-foot { transition: opacity 0.2s; }
 .service-card:hover .sc-foot { opacity: 0; }
 
-/* Touch: process steps — show description always, no hover/tap needed */
-@media (hover: none) {
-  .process-step { min-height: 0; }
-  .step-desc {
-    position: static;
-    opacity: 1;
-    pointer-events: auto;
-    margin-top: 1rem;
-  }
-}
-
 /* Touch: card sizes to content — sc-front is illustration background, sc-back is in flow */
 @media (hover: none) {
   /* Block layout lets card shrink-wrap its content */
@@ -1002,8 +991,70 @@ footer {
   .hero-coords { display: none; }
 }
 
-/* Override: touch devices shrink-wrap cards to their content, no fixed height */
+/* Mobile touch overrides — placed after all breakpoints to win cascade */
 @media (hover: none) {
+  /* Service cards: shrink-wrap to content */
   .service-card { min-height: 0; display: block; }
   .sc-inner { display: block; position: relative; }
+
+  /* Process steps: compact accordion */
+  .process-steps { border-top: 1px solid var(--border); }
+  .process-step {
+    min-height: 0;
+    padding: 1.1rem 0;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  /* Keep num + title visible when open — override desktop fade */
+  .step-num, .step-title { transition: none; }
+  .process-step.is-open .step-num,
+  .process-step.is-open .step-title { opacity: 1; }
+
+  /* Hide the — 01 — line motif; just show the number */
+  .step-num::before,
+  .step-num::after { display: none; }
+  .step-num { font-size: 0.6rem; margin-bottom: 0.1rem; opacity: 0.5; }
+
+  /* Title row with → indicator */
+  .step-title {
+    font-size: 1rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .step-title::after {
+    content: '→';
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    opacity: 0.45;
+    flex-shrink: 0;
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+  .process-step.is-open .step-title::after {
+    transform: rotate(90deg);
+  }
+
+  /* Description: hidden until tapped */
+  .step-desc {
+    position: static;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, max-height 0.4s ease;
+    margin-top: 0;
+  }
+  .process-step.is-open .step-desc {
+    opacity: 1;
+    max-height: 20rem;
+    pointer-events: auto;
+    margin-top: 0.75rem;
+    padding-bottom: 0.25rem;
+  }
 }
