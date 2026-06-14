@@ -522,25 +522,22 @@ nav {
 .sc-foot { transition: opacity 0.2s; }
 .service-card:hover .sc-foot { opacity: 0; }
 
-/* Touch: 3D card flip — rotation driven directly by JS scroll position */
+/* Touch: no flip — illustration as background, content always visible */
 @media (hover: none) {
-  .service-card { perspective: 900px; }
-  .sc-inner { transform-style: preserve-3d; }
   .sc-front, .sc-back {
     position: absolute;
     inset: 0;
     padding: 1.75rem;
     display: flex;
     flex-direction: column;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
   }
   .sc-front { justify-content: space-between; }
+  .sc-illus { opacity: 0.15; }
   .sc-back {
-    transform: rotateY(180deg);
-    background: var(--slate);
+    transform: none;
+    background: transparent;
     justify-content: flex-end;
-    pointer-events: none;
+    pointer-events: auto;
   }
   .sc-back .sc-body { opacity: 1; transform: none; pointer-events: auto; }
 }

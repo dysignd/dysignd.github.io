@@ -32,33 +32,6 @@ document.querySelectorAll('.process-step').forEach(step => {
   });
 });
 
-// ── Service cards: scroll-driven 3D flip (touch devices only) ─────────
-if (window.matchMedia('(hover: none)').matches) {
-  const serviceCards = Array.from(document.querySelectorAll('.service-card'));
-
-  function updateCardFlips() {
-    const screenCentre = window.innerHeight / 2;
-    const flipRange    = window.innerHeight * 0.32; // scroll distance = full flip
-
-    serviceCards.forEach(card => {
-      const inner = card.querySelector('.sc-inner');
-      const back  = card.querySelector('.sc-back');
-      if (!inner) return;
-
-      const rect       = card.getBoundingClientRect();
-      const cardCentre = rect.top + rect.height / 2;
-      const dist       = Math.abs(cardCentre - screenCentre);
-      const t          = Math.max(0, 1 - dist / flipRange);
-      const rotation   = t * 180;
-
-      inner.style.transform = `rotateY(${rotation}deg)`;
-      if (back) back.style.pointerEvents = rotation > 90 ? 'auto' : 'none';
-    });
-  }
-
-  window.addEventListener('scroll', updateCardFlips, { passive: true });
-  updateCardFlips();
-}
 
 // ── Word cycling ──────────────────────────────
 const words = ['logo', 'video', 'post', 'brochure', 'pamphlet', 'sign'];
