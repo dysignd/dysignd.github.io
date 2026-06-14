@@ -522,6 +522,17 @@ nav {
 .sc-foot { transition: opacity 0.2s; }
 .service-card:hover .sc-foot { opacity: 0; }
 
+/* Touch: process steps — show description always, no hover/tap needed */
+@media (hover: none) {
+  .process-step { min-height: 0; }
+  .step-desc {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+    margin-top: 1rem;
+  }
+}
+
 /* Touch: no flip — illustration as background, content always visible */
 @media (hover: none) {
   .sc-front, .sc-back {
