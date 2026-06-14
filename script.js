@@ -11,13 +11,13 @@ document.querySelectorAll('.process-step').forEach(step => {
 if (window.matchMedia('(hover: none)').matches) {
   const cardObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
+      if (entry.intersectionRatio >= 0.72) {
         entry.target.classList.add('is-revealed');
-      } else {
+      } else if (entry.intersectionRatio < 0.3) {
         entry.target.classList.remove('is-revealed');
       }
     });
-  }, { threshold: 0.55 });
+  }, { threshold: [0.3, 0.72] });
   document.querySelectorAll('.service-card').forEach(card => cardObserver.observe(card));
 }
 
