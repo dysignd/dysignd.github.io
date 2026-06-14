@@ -7,6 +7,16 @@ document.querySelectorAll('.process-step').forEach(step => {
   });
 });
 
+// ── Service cards: scroll-reveal on touch devices ─────────
+if (window.matchMedia('(hover: none)').matches) {
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('is-revealed');
+    });
+  }, { threshold: 0.55 });
+  document.querySelectorAll('.service-card').forEach(card => cardObserver.observe(card));
+}
+
 // ── Word cycling ──────────────────────────────
 const words = ['logo', 'video', 'post', 'brochure', 'pamphlet', 'sign'];
 let idx = 0;

@@ -482,6 +482,13 @@ nav {
 
 .sc-foot { transition: opacity 0.2s; }
 .service-card:hover .sc-foot { opacity: 0; }
+
+/* Scroll-reveal state (applied by JS on touch devices) */
+.service-card.is-revealed .sc-illus { opacity: 0; }
+.service-card.is-revealed { background: rgba(255,255,255,0.04); }
+.service-card.is-revealed .sc-dot { opacity: 0; }
+.service-card.is-revealed .sc-body { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.service-card.is-revealed .sc-foot { opacity: 0; }
 .sc-icon {
   font-size: 1.25rem;
   color: rgba(255,255,255,0.35);
