@@ -27,7 +27,7 @@
 if (window.matchMedia('(hover: none)').matches) {
   document.querySelectorAll('.service-card').forEach(card => {
     card.addEventListener('click', () => {
-      window.location.href = '#contact';
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
     });
   });
 }
