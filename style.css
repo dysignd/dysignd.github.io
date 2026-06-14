@@ -1009,10 +1009,10 @@ footer {
     border-bottom: 1px solid var(--border);
     cursor: pointer;
   }
-  /* Keep num + title visible when open — override desktop fade */
+  /* Keep num + title always visible — #process raises specificity above the 960px fade rule */
   .step-num, .step-title { transition: none; }
-  .process-step.is-open .step-num,
-  .process-step.is-open .step-title { opacity: 1; }
+  #process .step-num,
+  #process .step-title { opacity: 1; }
 
   /* Hide the — 01 — line motif; just show the number */
   .step-num::before,
