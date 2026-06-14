@@ -55,8 +55,9 @@ const heroIllus    = document.querySelector('.illus-hero');
 
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
-let lastScrollY = window.scrollY;
-let illusRevealed = false;
+let lastScrollY    = window.scrollY;
+let mobileRevealed = false;
+let illusRevealed  = false;
 
 function isMobile() { return window.innerWidth <= 600; }
 
@@ -66,46 +67,56 @@ function revealIllus() {
   heroIllus.classList.add('is-revealed');
 }
 
+function revealFull() {
+  if (mobileRevealed) return;
+  mobileRevealed = true;
+
+  payoffLine.style.transition  = 'opacity 0.85s ease, transform 0.85s ease';
+  subPayoff.style.transition   = 'opacity 0.85s ease 0.15s, transform 0.85s ease 0.15s';
+  heroActions.style.transition = 'opacity 0.85s ease 0.3s, transform 0.85s ease 0.3s';
+
+  payoffLine.style.opacity    = '1';
+  payoffLine.style.transform  = 'translateY(0)';
+  subPayoff.style.opacity     = '1';
+  subPayoff.style.transform   = 'translateY(0)';
+  heroActions.style.opacity   = '1';
+  heroActions.style.transform = 'translateY(0)';
+
+  if (scrollHint) scrollHint.classList.add('is-hidden');
+  revealIllus();
+}
+
 function onScroll() {
   const scrolled   = window.scrollY;
   const heroTop    = heroWrapper.offsetTop;
   const scrollRoom = heroWrapper.offsetHeight - window.innerHeight;
   const raw        = Math.min(1, Math.max(0, (scrolled - heroTop) / scrollRoom));
 
-  if (raw > 0.28) revealIllus();
-  if (scrollHint && raw > 0.06) scrollHint.classList.add('is-hidden');
-
   if (isMobile()) {
-    // Progressive reveal tied directly to scroll position — no body lock
-    const payoffT  = easeOut(Math.min(1, Math.max(0, (raw - 0.15) / 0.4)));
-    payoffLine.style.opacity   = payoffT;
-    payoffLine.style.transform = `translateY(${(1 - payoffT) * 22}px)`;
+    if (!mobileRevealed && scrolled > 20) revealFull();
+    lastScrollY = scrolled;
+    return;
+  }
 
-    const subT = easeOut(Math.min(1, Math.max(0, (raw - 0.38) / 0.35)));
-    subPayoff.style.opacity   = subT;
-    subPayoff.style.transform = `translateY(${(1 - subT) * 16}px)`;
+  if (raw > 0.28) revealIllus();
+  if (scrollHint) scrollHint.classList.add('is-hidden');
 
-    const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.6) / 0.3)));
-    heroActions.style.opacity   = actionsT;
-    heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
-  } else {
-    const payoffT  = easeOut(Math.min(1, Math.max(0, (raw - 0.30) / 0.35)));
-    payoffLine.style.opacity   = payoffT;
-    payoffLine.style.transform = `translateY(${(1 - payoffT) * 22}px)`;
+  const payoffT  = easeOut(Math.min(1, Math.max(0, (raw - 0.30) / 0.35)));
+  payoffLine.style.opacity   = payoffT;
+  payoffLine.style.transform = `translateY(${(1 - payoffT) * 22}px)`;
 
-    const subT = easeOut(Math.min(1, Math.max(0, (raw - 0.45) / 0.25)));
-    subPayoff.style.opacity   = subT;
-    subPayoff.style.transform = `translateY(${(1 - subT) * 16}px)`;
+  const subT = easeOut(Math.min(1, Math.max(0, (raw - 0.45) / 0.25)));
+  subPayoff.style.opacity   = subT;
+  subPayoff.style.transform = `translateY(${(1 - subT) * 16}px)`;
 
-    const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.55) / 0.30)));
-    heroActions.style.opacity   = actionsT;
-    heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
+  const actionsT = easeOut(Math.min(1, Math.max(0, (raw - 0.55) / 0.30)));
+  heroActions.style.opacity   = actionsT;
+  heroActions.style.transform = `translateY(${(1 - actionsT) * 12}px)`;
 
-    if (clientsStrip) {
-      const pastHero = scrolled > heroWrapper.offsetTop + heroWrapper.offsetHeight;
-      if (pastHero && scrolled < lastScrollY) clientsStrip.classList.add('is-visible');
-      else clientsStrip.classList.remove('is-visible');
-    }
+  if (clientsStrip) {
+    const pastHero = scrolled > heroWrapper.offsetTop + heroWrapper.offsetHeight;
+    if (pastHero && scrolled < lastScrollY) clientsStrip.classList.add('is-visible');
+    else clientsStrip.classList.remove('is-visible');
   }
 
   lastScrollY = scrolled;
