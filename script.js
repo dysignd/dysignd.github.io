@@ -9,16 +9,24 @@ document.querySelectorAll('.process-step').forEach(step => {
 
 // ── Service cards: 3D flip on scroll (touch devices only) ─────────
 if (window.matchMedia('(hover: none)').matches) {
-  const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
+  const serviceCards = Array.from(document.querySelectorAll('.service-card'));
+  const FLIP_ZONE = 80; // px either side of screen centre
+
+  function updateCardFlips() {
+    const screenCentre = window.innerHeight / 2;
+    serviceCards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const cardCentre = rect.top + rect.height / 2;
+      if (Math.abs(cardCentre - screenCentre) < FLIP_ZONE) {
+        card.classList.add('is-revealed');
       } else {
-        entry.target.classList.remove('is-revealed');
+        card.classList.remove('is-revealed');
       }
     });
-  }, { rootMargin: '-35% 0px -35% 0px', threshold: 0.4 });
-  document.querySelectorAll('.service-card').forEach(card => cardObserver.observe(card));
+  }
+
+  window.addEventListener('scroll', updateCardFlips, { passive: true });
+  updateCardFlips();
 }
 
 // ── Word cycling ──────────────────────────────
