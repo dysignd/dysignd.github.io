@@ -17,7 +17,7 @@ if (window.matchMedia('(hover: none)').matches) {
         entry.target.classList.remove('is-revealed');
       }
     });
-  }, { rootMargin: '-22% 0px -22% 0px', threshold: 0.5 });
+  }, { rootMargin: '-35% 0px -35% 0px', threshold: 0.4 });
   document.querySelectorAll('.service-card').forEach(card => cardObserver.observe(card));
 }
 
