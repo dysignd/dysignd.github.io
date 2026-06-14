@@ -32,21 +32,27 @@ document.querySelectorAll('.process-step').forEach(step => {
   });
 });
 
-// ── Service cards: 3D flip on scroll (touch devices only) ─────────
+// ── Service cards: scroll-driven 3D flip (touch devices only) ─────────
 if (window.matchMedia('(hover: none)').matches) {
   const serviceCards = Array.from(document.querySelectorAll('.service-card'));
-  const FLIP_ZONE = 80; // px either side of screen centre
 
   function updateCardFlips() {
     const screenCentre = window.innerHeight / 2;
+    const flipRange    = window.innerHeight * 0.32; // scroll distance = full flip
+
     serviceCards.forEach(card => {
-      const rect = card.getBoundingClientRect();
+      const inner = card.querySelector('.sc-inner');
+      const back  = card.querySelector('.sc-back');
+      if (!inner) return;
+
+      const rect       = card.getBoundingClientRect();
       const cardCentre = rect.top + rect.height / 2;
-      if (Math.abs(cardCentre - screenCentre) < FLIP_ZONE) {
-        card.classList.add('is-revealed');
-      } else {
-        card.classList.remove('is-revealed');
-      }
+      const dist       = Math.abs(cardCentre - screenCentre);
+      const t          = Math.max(0, 1 - dist / flipRange);
+      const rotation   = t * 180;
+
+      inner.style.transform = `rotateY(${rotation}deg)`;
+      if (back) back.style.pointerEvents = rotation > 90 ? 'auto' : 'none';
     });
   }
 
