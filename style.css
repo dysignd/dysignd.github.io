@@ -533,7 +533,7 @@ nav {
   }
 }
 
-/* Touch: no flip — illustration as background, content always visible */
+/* Touch: card is the CTA — no button, no footer, whole card taps to contact */
 @media (hover: none) {
   .sc-front, .sc-back {
     position: absolute;
@@ -550,7 +550,32 @@ nav {
     justify-content: flex-end;
     pointer-events: auto;
   }
-  .sc-back .sc-body { opacity: 1; transform: none; pointer-events: auto; }
+  .sc-back .sc-body {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    padding-bottom: 2rem;
+  }
+
+  /* Hide the button and the duplicate footer label */
+  .sc-cta { display: none; }
+  .sc-foot { display: none; }
+
+  /* Card is tappable */
+  .service-card { cursor: pointer; }
+  .service-card:active { opacity: 0.8; transition: opacity 0.1s; }
+
+  /* Subtle arrow in the bottom-right — the only tap hint needed */
+  .sc-back::after {
+    content: '→';
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.75rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.22);
+    pointer-events: none;
+  }
 }
 .sc-icon {
   font-size: 1.25rem;

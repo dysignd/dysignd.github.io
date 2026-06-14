@@ -23,6 +23,15 @@
   els.forEach(el => observer.observe(el));
 })();
 
+// ── Service cards: whole card taps to #contact on touch ───
+if (window.matchMedia('(hover: none)').matches) {
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('click', () => {
+      window.location.href = '#contact';
+    });
+  });
+}
+
 // ── Process step: click to expand on touch/tablet ─────────
 document.querySelectorAll('.process-step').forEach(step => {
   step.addEventListener('click', () => {
