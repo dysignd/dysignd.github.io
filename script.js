@@ -57,7 +57,6 @@ function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
 let lastScrollY = window.scrollY;
 let illusRevealed = false;
-let rafPending    = false;
 
 function isMobile() { return window.innerWidth <= 600; }
 
@@ -112,12 +111,7 @@ function onScroll() {
   lastScrollY = scrolled;
 }
 
-window.addEventListener('scroll', () => {
-  if (!rafPending) {
-    rafPending = true;
-    requestAnimationFrame(() => { onScroll(); rafPending = false; });
-  }
-}, { passive: true });
+window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
 // ── Ticker: rAF loop (no jump) + scrub ─────────
