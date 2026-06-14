@@ -383,15 +383,40 @@ nav {
   border-right: 1px solid rgba(255,255,255,0.1);
   border-top: 1px solid rgba(255,255,255,0.1);
   border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding: 1.75rem;
+  padding: 0;
   min-height: 440px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   transition: background 0.3s;
   position: relative;
   overflow: hidden;
 }
+
+/* Card inner wrapper + front/back faces */
+.sc-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.sc-front {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.75rem;
+  position: relative;
+}
+.sc-back {
+  position: absolute;
+  inset: 0;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+.service-card:hover .sc-back { pointer-events: auto; }
 
 .sc-illus {
   position: absolute;
@@ -483,12 +508,33 @@ nav {
 .sc-foot { transition: opacity 0.2s; }
 .service-card:hover .sc-foot { opacity: 0; }
 
-/* Scroll-reveal state (applied by JS on touch devices) */
-.service-card.is-revealed .sc-illus { opacity: 0; }
-.service-card.is-revealed { background: rgba(255,255,255,0.04); }
-.service-card.is-revealed .sc-dot { opacity: 0; }
-.service-card.is-revealed .sc-body { opacity: 1; transform: translateY(0); pointer-events: auto; }
-.service-card.is-revealed .sc-foot { opacity: 0; }
+/* Touch: 3D card flip triggered by scroll */
+@media (hover: none) {
+  .service-card { perspective: 900px; }
+  .sc-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+  .service-card.is-revealed .sc-inner { transform: rotateY(180deg); }
+  .sc-front, .sc-back {
+    position: absolute;
+    inset: 0;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .sc-front { justify-content: space-between; }
+  .sc-back {
+    transform: rotateY(180deg);
+    background: var(--slate);
+    justify-content: flex-end;
+    pointer-events: none;
+  }
+  .service-card.is-revealed .sc-back { pointer-events: auto; }
+  .sc-back .sc-body { opacity: 1; transform: none; pointer-events: auto; }
+}
 .sc-icon {
   font-size: 1.25rem;
   color: rgba(255,255,255,0.35);
