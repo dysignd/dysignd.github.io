@@ -997,6 +997,9 @@ footer {
   .service-card { min-height: 0; display: block; }
   .sc-inner { display: block; position: relative; }
 
+  /* Process illustration: pin to top so it doesn't jump when accordion changes section height */
+  .illus-process-bg { top: 0; transform: none; }
+
   /* Process steps: compact accordion */
   .process-steps { border-top: 1px solid var(--border); }
   .process-step {
