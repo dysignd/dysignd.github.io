@@ -1,3 +1,28 @@
+// ── Drift-in reveal ───────────────────────────────────────
+(function () {
+  const els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+
+  // Stagger siblings that share the same parent container
+  const seen = new Map();
+  els.forEach(el => {
+    const key = el.parentElement;
+    seen.set(key, (seen.get(key) || 0) + 1);
+    el.style.transitionDelay = `${(seen.get(key) - 1) * 80}ms`;
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  els.forEach(el => observer.observe(el));
+})();
+
 // ── Process step: click to expand on touch/tablet ─────────
 document.querySelectorAll('.process-step').forEach(step => {
   step.addEventListener('click', () => {
