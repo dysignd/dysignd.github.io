@@ -285,7 +285,7 @@
           </div>
         </div>
         <div class="contact-right reveal">
-          <form id="contact-form" name="contact" method="POST" data-netlify="true">
+          <form id="contact-form" name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true">
             <input type="hidden" name="form-name" value="contact">
             <div class="form-group">
               <label for="name">Your name</label>
@@ -303,6 +303,7 @@
               <label for="message">What are you working on?</label>
               <textarea id="message" name="message" placeholder="Tell us about your brand situation. The more honest, the better." required></textarea>
             </div>
+            <div data-netlify-recaptcha="true"></div>
             <div class="form-submit">
               <button type="submit" class="btn btn-accent">Send it →</button>
             </div>
