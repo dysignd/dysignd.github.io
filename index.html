@@ -285,11 +285,8 @@
           </div>
         </div>
         <div class="contact-right reveal">
-          <!--
-            SETUP: Go to formspree.io, create a free account,
-            and replace YOUR_FORM_ID below with your form endpoint.
-          -->
-          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <form name="contact" method="POST" data-netlify="true">
+            <input type="hidden" name="form-name" value="contact">
             <div class="form-group">
               <label for="name">Your name</label>
               <input type="text" id="name" name="name" placeholder="Full name" required>
