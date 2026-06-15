@@ -63,6 +63,21 @@ if (window.matchMedia('(hover: none)').matches) {
   });
 }
 
+// ── About: story accordion ────────────────────────────────
+(function () {
+  const toggle = document.querySelector('.about-toggle');
+  const story  = document.querySelector('.about-story');
+  if (!toggle || !story) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = story.classList.contains('is-open');
+    story.classList.toggle('is-open');
+    story.setAttribute('aria-hidden', isOpen);
+    toggle.setAttribute('aria-expanded', !isOpen);
+    toggle.textContent = isOpen ? 'Read our story →' : 'Close ↑';
+  });
+})();
+
 // ── Process step: click to expand on touch/tablet ─────────
 document.querySelectorAll('.process-step').forEach(step => {
   step.addEventListener('click', () => {

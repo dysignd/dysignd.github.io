@@ -740,6 +740,42 @@ nav {
 .about-right p strong { color: var(--dark); font-weight: 500; }
 .about-right p:last-child { margin-bottom: 0; }
 
+.about-subhead {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.125rem;
+  color: var(--dark);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.about-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dark);
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+  margin-bottom: 0;
+  display: block;
+}
+.about-toggle:hover { opacity: 1; }
+
+.about-story {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.65s ease;
+}
+.about-story.is-open {
+  max-height: 120rem;
+}
+.about-story p:first-child { margin-top: 1.75rem; }
+
 .about-rule {
   border: none;
   border-top: 1px solid var(--border);
