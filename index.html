@@ -12,7 +12,7 @@
   <link rel="icon" href="Favicon/Black.png" media="(prefers-color-scheme: light)">
   <link rel="icon" href="Favicon/White.png" media="(prefers-color-scheme: dark)">
   <link rel="stylesheet" href="tokens.css">
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="stylesheet" href="style.css?v=30">
 </head>
 <body>
 
@@ -285,7 +285,7 @@
           </div>
         </div>
         <div class="contact-right reveal">
-          <form name="contact" method="POST" data-netlify="true">
+          <form id="contact-form" name="contact" method="POST" data-netlify="true">
             <input type="hidden" name="form-name" value="contact">
             <div class="form-group">
               <label for="name">Your name</label>
@@ -307,6 +307,11 @@
               <button type="submit" class="btn btn-accent">Send it →</button>
             </div>
           </form>
+          <div id="form-success" class="form-success" aria-hidden="true">
+            <p class="form-success-anno">Fig. 06 — Received</p>
+            <h3 class="form-success-heading">We'll be in touch.</h3>
+            <p class="form-success-body">Your message is with us. We read every enquiry and respond personally — usually within a day or two.</p>
+          </div>
         </div>
       </div>
     </div>

@@ -1,3 +1,34 @@
+// ── Contact form: AJAX submit → custom success state ──────
+(function () {
+  const form    = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  if (!form || !success) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    })
+    .then(() => {
+      form.style.transition = 'opacity 0.35s ease';
+      form.style.opacity = '0';
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        requestAnimationFrame(() => success.classList.add('is-visible'));
+      }, 350);
+    })
+    .catch(() => {
+      // Fall back to native submit if fetch fails
+      form.submit();
+    });
+  });
+})();
+
 // ── Drift-in reveal ───────────────────────────────────────
 (function () {
   const els = document.querySelectorAll('.reveal');

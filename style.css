@@ -834,6 +834,40 @@ input:focus, textarea:focus { border-color: rgba(255,255,255,0.28); }
 textarea { height: 140px; resize: vertical; }
 .form-submit { margin-top: 2rem; }
 
+.form-success {
+  display: none;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  padding: 2.5rem 0;
+}
+.form-success.is-visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+.form-success-anno {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 1.25rem;
+}
+.form-success-heading {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+.form-success-body {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  max-width: 38ch;
+}
+
 /* ═══════════════════════════════════
    FOOTER — SLATE
 ═══════════════════════════════════ */
